@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef, useEffect } from "react";
+import "./App.css";
 
 function App() {
+  const ref = useRef("red");
+
+  useEffect(() => {
+    const currentDiv = ref.current.style;
+    const timerColor = setInterval(() => {
+      currentDiv.background === "red"
+        ? (currentDiv.background = "green")
+        : (currentDiv.background = "red");
+    }, 1000);
+
+    return () => clearInterval(timerColor);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="divContainer" ref={ref}></div>
     </div>
   );
 }
